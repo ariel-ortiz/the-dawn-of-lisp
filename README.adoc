@@ -1,0 +1,33 @@
+= The Dawn of Lisp
+
+How to write `eval` and `apply` in Clojure. Code for http://2017.clojure-conj.org/about/[Clojure/conj 2017] presentation.
+
+== Installing the most recent version of Leiningen
+
+- You must have Java already installed.
+
+- Download the Leiningen script. At the terminal type:
++
+----
+wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+----
+
+- Make the script executable:
++
+----
+chmod +x lein
+----
+
+- Move the script to the `/usr/local/bin` directory:
++
+----
+sudo mv lein /usr/local/bin
+----
+
+- To run the Clojure REPL (Read-Eval-Print-Loop), type:
++
+----
+lein repl
+----
++
+Press `Ctrl-D` to quit the REPL.
