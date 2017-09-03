@@ -59,3 +59,9 @@ touch profiles.clj
 ----
 +
 The installation of the dependencies/plugins will occur next time you run the REPL.
++
+To run a script, for example `hello_world.clj`, you can now type:
++
+----
+lein exec hello_world.clj
+----
