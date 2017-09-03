@@ -1,6 +1,6 @@
 = The Dawn of Lisp
 
-How to write `eval` and `apply` in Clojure. Code for http://2017.clojure-conj.org/about/[Clojure/conj 2017] presentation.
+How to write `eval` and `apply` in Clojure. Code for http://2017.clojure-conj.org/[Clojure/conj 2017] presentation.
 
 == Installing the most recent version of Leiningen
 
@@ -31,3 +31,31 @@ lein repl
 ----
 +
 Press `Ctrl-D` to quit the REPL.
+
+== Adding plugins and dependencies to Leiningen
+
+- Create a `profiles.clj` file in the `.lein` directory. In your home directory type:
++
+----
+mkdir .lein
+----
++
+----
+cd .lein
+----
++
+----
+touch profiles.clj 
+----
+
+- Edit and save the `profiles.clj` file with the desired plugins and/or dependencies, for example:
++
+[source, clojure]
+----
+{:user
+  {:plugins      [[lein-exec "0.3.6"]]
+   :dependencies [[org.clojure/math.numeric-tower "0.0.4"]
+                  [org.clojure/core.logic "0.8.11"]]}}
+----
++
+The installation of the dependencies/plugins will occur next time you run the REPL.
