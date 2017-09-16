@@ -65,3 +65,11 @@ To run a script, for example `hello_world.clj`, you can now type:
 ----
 lein exec hello_world.clj
 ----
+
+== Creating a Project
+
+Type at the terminal:
+
+----
+lein new app lisp
+----
