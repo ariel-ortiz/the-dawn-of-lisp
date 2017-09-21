@@ -34,15 +34,19 @@ Press `Ctrl-D` to quit the REPL.
 
 == Adding plugins and dependencies to Leiningen
 
-- Create a `profiles.clj` file in the `.lein` directory. In your home directory type:
+- Create a `profiles.clj` file in the `.lein` directory. If the `.lein` directory doesn't exist, type in your home directory:
 +
 ----
 mkdir .lein
 ----
 +
+Change to the `.lein` directory:
++
 ----
 cd .lein
 ----
++
+Create the `profiles.clj` file:
 +
 ----
 touch profiles.clj 
