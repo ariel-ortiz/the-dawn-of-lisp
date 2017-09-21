@@ -1,10 +1,4 @@
-(ns lisp.core
-  (:gen-class))
-
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+(ns lisp-one-point-five.core)
 
 (declare $apply $assoc $atom $car $caar $cadr $cadar
          $caddr $cdr $cdar $cons $eq $eval $evcon $evlis
@@ -41,7 +35,7 @@
      ($apply ($caddr fun)
              x
              ($cons ($cons ($cadr fun)
-                          ($caddr fun))
+                           ($caddr fun))
                     a)))))
 
 (defn $eval
@@ -55,13 +49,13 @@
      ($cond
        (($eq ($car e) 'QUOTE) ($cadr e))
        (($eq ($car e) 'COND)  ($evcon ($cdr e) a))
-       (true                   ($apply ($car e)
-                                       ($evlis ($cdr e) a)
-                                       a))))
+       (true                  ($apply ($car e)
+                                      ($evlis ($cdr e) a)
+                                      a))))
     (true
      ($apply ($car e)
-            ($evlis ($cdr e) a)
-            a))))
+             ($evlis ($cdr e) a)
+             a))))
 
 (defn $evcon
   [c a]
@@ -126,4 +120,3 @@
 (def $cadar (comp $car $cdr $car))
 
 (def $null empty?)
-
