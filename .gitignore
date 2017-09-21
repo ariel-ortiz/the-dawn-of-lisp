@@ -12,5 +12,5 @@ pom.xml.asc
 .lein-plugins/
 .lein-failures
 .nrepl-port
-lisp.iml
+lisp-one-point-five.iml
 .idea/
