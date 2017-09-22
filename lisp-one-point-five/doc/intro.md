@@ -1,3 +1,3 @@
-# Introduction to lisp-one-point-five
+# Lisp 1.5: Introduction
 
-TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)
+The Lisp 1.5 manual, written by John McCarthy et al in 1961, contained in less than one page the compact yet amazing definition of the Lisp programming language using Lisp itself. This meta-circular account was referred as the “Maxwell’s Equations of Software” by Alan Kay. In a similar fashion, Paul Graham stated that this insight did to programming something like what Euclid did for geometry. In essence, the said definition demonstrated that it is possible to build an entire programming language using only a notation for functions and a handful of simple operators. This Clojure library shows how to build an interpreter that mimics Lisp in its very initial stages. As in the original documentation, the interpreter consists of two main and highly intermixed functions: `eval` and `apply`.

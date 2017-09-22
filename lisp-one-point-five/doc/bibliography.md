@@ -1,0 +1,4 @@
+# References
+- John McCarthy, et al. (1962) [LISP 1.5 Programmer's Manual](https://www.google.com.mx/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwjr1ubXwrnWAhUJ2mMKHQceCrsQFggoMAA&url=http%3A%2F%2Fwww.softwarepreservation.org%2Fprojects%2FLISP%2Fbook%2FLISP%25201.5%2520Programmers%2520Manual.pdf&usg=AFQjCNGJVO_CN6X9q-MaJ0X2qWcJUEOxLw)
+- Ken Shirriff (2008), ["Maxwell's equations of software" examined](http://www.righto.com/2008/07/maxwells-equations-of-software-examined.html)
+- Michael Nielsen (2012), [Lisp as the Maxwell’s equations of software](http://www.michaelnielsen.org/ddi/lisp-as-the-maxwells-equations-of-software/)

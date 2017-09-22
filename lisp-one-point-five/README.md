@@ -1,14 +1,19 @@
-# lisp-one-point-five
+# Lisp 1.5
 
-A Clojure library designed to ... well, that part is up to you.
+This source code was developed for the presentation “The Dawn of Lisp, or: How to Write Eval and Apply in Clojure” for [Clojure/conj 2017](http://2017.clojure-conj.org/).
 
 ## Usage
 
-FIXME
+    (use 'lisp-one-point-five.core)
+    
+    ($evalquote 'CAR '((A B C)))
+    => A
+    
+    ($evalquote 'CONS '(A (X Y Z)))
+    => (A X Y Z)
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 by Ariel Ortiz.
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the GNU General Public License v3.0.
