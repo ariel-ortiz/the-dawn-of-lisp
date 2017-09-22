@@ -49,7 +49,7 @@
   (is (= '((A D) (B E) (C F) (W X) (Y Z))
          ($pairlis '(A B C) '(D E F) '((W X) (Y Z)))))
   (is (= '((ALPHA (A B C)) (BETA (D E F)) (GAMMA (G H I)))
-         ($pairlis '(ALPHA BETA GAMMA) '((A B C) (D E F) (G H I)) ()))))
+         ($pairlis '(ALPHA BETA GAMMA) '((A B C) (D E F) (G H I)) $NIL))))
 
 (deftest test-$assoc
   (is (= '(A B) ($assoc 'A '((A B)))))
@@ -57,29 +57,59 @@
 
 (deftest test-$apply
   (is (= 'A
-         ($apply 'CAR '((A B C)) ())))
+         ($apply 'CAR '((A B C)) $NIL)))
   (is (= '(B C)
-         ($apply 'CDR '((A B C)) ())))
+         ($apply 'CDR '((A B C)) $NIL)))
   (is (= '(X A B C)
-         ($apply 'CONS '(X (A B C)) ())))
+         ($apply 'CONS '(X (A B C)) $NIL)))
   (is (= $T
-         ($apply 'ATOM '(ALPHA) ())))
+         ($apply 'ATOM '(ALPHA) $NIL)))
   (is (= $T
-         ($apply 'ATOM '(()) ())))
+         ($apply 'ATOM '(()) $NIL)))
   (is (= $F
-         ($apply 'ATOM '((A B C)) ())))
+         ($apply 'ATOM '((A B C)) $NIL)))
   (is (= $T
-         ($apply 'EQ '(ALPHA ALPHA) ())))
+         ($apply 'EQ '(ALPHA ALPHA) $NIL)))
   (is (= $T
-         ($apply 'EQ '(() ()) ())))
+         ($apply 'EQ '(() ()) $NIL)))
   (is (= $F
-         ($apply 'EQ '(ALPHA BETA) ())))
+         ($apply 'EQ '(ALPHA BETA) $NIL)))
   (is (= $F
-         ($apply 'EQ '(() ALPHA) ())))
+         ($apply 'EQ '(() ALPHA) $NIL)))
   (is (= 'A
          ($apply 'F '((A B C)) '((F (LAMBDA (X) (CAR X)))))))
   (is (= 'A
-         ($apply '(LAMBDA (X) (CAR X)) '((A B C)) ()))))
+         ($apply '(LAMBDA (X) (CAR X)) '((A B C)) $NIL)))
+  (is (= '((B C) (E F) (G H) (J K))
+         ($apply 'MAP
+                 '(CDR ((A B C) (D E F) (F G H) (I J K)))
+                 '((MAP (LAMBDA (F X)
+                          (COND
+                            ((EQ X NIL) NIL)
+                            (T          (CONS (F (CAR X))
+                                              (MAP F (CDR X)))))))
+                   (NIL ())
+                   (T   true)))))
+  (is (= $NIL
+         ($apply '(LABEL DUP
+                         (LAMBDA (X)
+                           (COND
+                             ((EQ X NIL) NIL)
+                             (T          (CONS (CAR X)
+                                               (CONS (CAR X)
+                                                     (DUP (CDR X))))))))
+                 '(())
+                 '((NIL ()) (T true)))))
+  (is (= '(ALPHA ALPHA BETA BETA GAMMA GAMMA)
+         ($apply '(LABEL DUP
+                         (LAMBDA (X)
+                           (COND
+                             ((EQ X NIL) NIL)
+                             (T          (CONS (CAR X)
+                                               (CONS (CAR X)
+                                                     (DUP (CDR X))))))))
+                 '((ALPHA BETA GAMMA))
+                 '((NIL ()) (T true))))))
 
 (deftest test-$eval
   (is (= '(A B C)
@@ -87,7 +117,7 @@
   (is (= '(LAMBDA (X) (CAR X))
          ($eval 'BETA '((BETA (LAMBDA (X) (CAR X)))))))
   (is (= 'ALPHA
-         ($eval '(QUOTE ALPHA) ())))
+         ($eval '(QUOTE ALPHA) $NIL)))
   (is (= 'ONE
          ($eval '(COND ((EQ A B) (QUOTE ONE))
                        ((ATOM C) (QUOTE TWO))
@@ -110,5 +140,4 @@
   (is (= '(ALPHA BETA GAMMA)
          ($eval '((LAMBDA (X) (CONS (QUOTE ALPHA) X))
                   (QUOTE (BETA GAMMA)))
-                ()))))
-
+                $NIL))))
