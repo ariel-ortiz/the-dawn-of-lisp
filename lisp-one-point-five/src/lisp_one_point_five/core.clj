@@ -91,32 +91,64 @@
     (true              ($assoc x ($cdr a)))))
 
 (defn $cons
+  "Obtains a new word from the free storage list and places
+  its two arguments in the address and decrement of this word,
+  respectively."
   [a b]
   ($cond
     ((seq? b) (cons a b))
     (true     (list a b))))
 
 (defn $atom
+  "Returns true if its argument is an atomic symbol, and
+  false if its argument is composite. The empty list is
+  considered atomic."
   [x]
   ($cond
     ((symbol? x)               true)
     ((and (seq? x) (empty? x)) true)
     (true                      false)))
 
-(def $eq =)
+(defn $eq
+  "Returns true if both arguments are the same atomic
+  symbol, otherwise returns false. It is undefined for
+  non-atomic arguments."
+  [a b]
+  ($cond
+    ((and ($atom a) ($atom b))
+     (= a b))))
 
-(def $car first)
+(def $car
+  "Returns the first part of its composite argument. The
+  car of an atomic symbol is undefined."
+  first)
 
-(def $cdr rest)
+(def $cdr
+  "Returns the second part of its composite argument. The
+  cdr of an atomic symbol is undefined."
+  rest)
 
-(def $caar (comp $car $car))
+(def $caar
+  "Equivalent to: ($car ($car x))."
+  (comp $car $car))
 
-(def $cadr (comp $car $cdr))
+(def $cadr
+  "Equivalent to: ($car ($cdr x))."
+  (comp $car $cdr))
 
-(def $cdar (comp $cdr $car))
+(def $cdar
+  "Equivalent to: ($cdr ($car x))."
+  (comp $cdr $car))
 
-(def $caddr (comp $car $cdr $cdr))
+(def $caddr
+  "Equivalent to: ($car ($cdr ($cdr x)))."
+  (comp $car $cdr $cdr))
 
-(def $cadar (comp $car $cdr $car))
+(def $cadar
+  "Equivalent to: ($car ($cdr ($car x)))."
+  (comp $car $cdr $car))
 
-(def $null empty?)
+(def $null
+  "Returns true if its argument is an empty list, or false
+  otherwise."
+  empty?)
