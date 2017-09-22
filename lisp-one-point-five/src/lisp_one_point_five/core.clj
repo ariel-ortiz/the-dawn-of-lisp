@@ -108,8 +108,9 @@
   [x y a]
   ($cond
     (($null x) a)
-    ($T        ($cons ($cons ($car x) ($car y))
-                      ($pairlis ($cdr x) ($cdr y) a)))))
+    ($T        ($cons
+                 ($cons ($car x) ($cons ($car y) ())) ; Lisp 1.5 divergence: original creates dotted pair.
+                 ($pairlis ($cdr x) ($cdr y) a)))))
 
 (defn $assoc
   "If a is an association list such as the one formed by
@@ -118,7 +119,7 @@
   function."
   [x a]
   ($cond
-    (($eq ($caar a) x) ($car a)) ; Lisp 1.5 manual uses equal instead of eq.
+    (($eq ($caar a) x) ($car a)) ; Lisp 1.5 divergence: original uses equal instead of eq.
     ($T                ($assoc x ($cdr a)))))
 
 (defn $evalquote
@@ -147,15 +148,12 @@
        ($T              ($apply ($eval fun a) x a))))
 
     (($eq ($car fun) 'LAMBDA)
-     ($eval ($caddr fun)
-            ($pairlis ($cadr fun) x a)))
+     ($eval ($caddr fun) ($pairlis ($cadr fun) x a)))
 
     (($eq ($car fun) 'LABEL)
-     ($apply ($caddr fun)
-             x
-             ($cons ($cons ($cadr fun)
-                           ($caddr fun))
-                    a)))))
+     ($apply ($caddr fun) x ($cons ($cons ($cadr fun)
+                                          ($caddr fun))
+                                   a)))))
 
 (defn $eval
   "Handles the forms in e. The argument a is used as an
@@ -165,7 +163,7 @@
   ($cond
 
     (($atom e)
-     ($cadr ($assoc e a)))
+     ($cadr ($assoc e a))) ; Lisp 1.5 divergence: original uses cdr on dotted pair.
 
     (($atom ($car e))
      ($cond
