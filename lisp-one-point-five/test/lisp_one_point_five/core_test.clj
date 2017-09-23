@@ -140,4 +140,14 @@
   (is (= '(ALPHA BETA GAMMA)
          ($eval '((LAMBDA (X) (CONS (QUOTE ALPHA) X))
                   (QUOTE (BETA GAMMA)))
-                $NIL))))
+                $NIL)))
+  ; The following test demonstrates that Lisp 1.5 had
+  ; variables with dynamic scoping.
+  (is (= '((ALPHA OMEGA) BETA GAMMA)
+         ($eval '((LAMBDA (X)
+                    ((LAMBDA (Y) (F Y)) B))
+                  (F A))
+                '((F (LAMBDA (Z) (CONS X Z)))
+                  (A (OMEGA))
+                  (B (BETA GAMMA))
+                  (X ALPHA))))))
