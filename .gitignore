@@ -14,3 +14,4 @@ pom.xml.asc
 .nrepl-port
 lisp-one-point-five.iml
 .idea/
+.DS_Store
