@@ -198,7 +198,7 @@
 (defn $evlis
   "Evaluate all expressions in list m. The argument a is
   used as an association list for storing the values of
-  bound  variables and function names."
+  bound variables and function names."
   [m a]
   ($cond
     (($null m) $NIL)
