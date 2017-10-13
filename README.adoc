@@ -1,79 +1,64 @@
-= The Dawn of Lisp
+= The Dawn of Lisp, or: How to Write Eval and Apply in Clojure
 
-How to write `eval` and `apply` in Clojure. Code for http://2017.clojure-conj.org/[Clojure/conj 2017] presentation.
+Code for http://2017.clojure-conj.org/[Clojure/conj 2017] presentation.
 
-== Installing the most recent version of Leiningen
+Check the https://docs.google.com/presentation/d/e/2PACX-1vTu_l9pGP0LEQVQhYuYUBjOhMe3iV4ZjcHijvVaDJr0MIKsKUNE9KlCYd7I2cK75tA3WL58gD3aYSBQ/pub?start=false&loop=false&delayms=3000[Google slides] for this presentation.
 
-- You must have Java already installed.
+The Lisp 1.5 manual, written by John McCarthy et al in 1961, contained in less than one page the compact yet amazing definition of the Lisp programming language using Lisp itself. This meta-circular account was referred as the “Maxwell’s Equations of Software” by Alan Kay. In a similar fashion, Paul Graham stated that this insight did to programming something like what Euclid did for geometry. In essence, the said definition demonstrated that it is possible to build an entire programming language using only a notation for functions and a handful of simple operators. In this talk, I will use Clojure to show how to build an interpreter that mimics Lisp in its very initial stages. As in the original documentation, the interpreter will consist of two main and highly intermixed functions: `eval` and `apply`. The central objective of this presentation is to provide attendees some highlights on the origins of Lisp and how its design ideas are central to Clojure and other programming languages. 
 
-- Download the Leiningen script. At the terminal type:
-+
-----
-wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
-----
+== Running the code
 
-- Make the script executable:
-+
-----
-chmod +x lein
-----
+You need to have https://leiningen.org/[Leiningen] intalled. Move to the `lisp-one-point-five` directory. At the terminal type:
 
-- Move the script to the `/usr/local/bin` directory:
-+
-----
-sudo mv lein /usr/local/bin
-----
+    cd lisp-one-point-five
 
-- To run the Clojure REPL (Read-Eval-Print-Loop), type:
-+
-----
-lein repl
-----
-+
-Press `Ctrl-D` to quit the REPL.
+Run the the REPL from there:
 
-== Adding plugins and dependencies to Leiningen
+    lein repl
 
-- Create a `profiles.clj` file in the `.lein` directory. If the `.lein` directory doesn't exist, type in your home directory:
-+
-----
-mkdir .lein
-----
-+
-Change to the `.lein` directory:
-+
-----
-cd .lein
-----
-+
-Create the `profiles.clj` file:
-+
-----
-touch profiles.clj 
-----
+Import the `lisp-one-point-five.core` name space:
 
-- Edit and save the `profiles.clj` file with the desired plugins and/or dependencies, for example:
-+
 [source, clojure]
 ----
-{:user
-  {:plugins      [[lein-exec "0.3.6"]]
-   :dependencies [[org.clojure/math.numeric-tower "0.0.4"]
-                  [org.clojure/core.logic "0.8.11"]]}}
-----
-+
-The installation of the dependencies/plugins will occur next time you run the REPL.
-+
-To run a script, for example `hello_world.clj`, you can now type:
-+
-----
-lein exec hello_world.clj
+user=> (use 'lisp-one-point-five.core)
+nil
 ----
 
-== Creating a Project
-
-Type at the terminal:
-
+You can now try expressions like:
+[source, clojure]
 ----
-lein new app lisp
+user=> ($eval '(CAR L) 
+              '((L (A B C))))
+A
+
+user=> ($eval '(CDR L) 
+              '((L (A B C))))
+(B C)
+
+user=> ($eval '((LAMBDA (X) (CONS X (CONS X NIL)))
+                P)
+              '((P A)
+                (NIL ())))  
+(A A)
+
+user=> ($eval '((LABEL MAPCAR (LAMBDA (F L)
+                                (COND
+                                  ((EQ L NIL) NIL)
+                                  (T (CONS (F (CAR L))
+                                           (MAPCAR F (CDR L)))))))
+                DUP
+                LST)
+              '((DUP (LAMBDA (X) (CONS X (CONS X NIL))))
+                (LST (A B C D))
+                (NIL ())
+                (T true)))           
+((A A) (B B) (C C) (D D))
 ----
+
+
+== Running the test
+
+Within the `lisp-one-point-five` directory, type at the terminal:
+
+    lein test
+    
