@@ -6,6 +6,15 @@ This code was developed for the http://2017.clojure-conj.org/[Clojure/conj 2017]
 
 The Lisp 1.5 manual, written by John McCarthy et al in 1961, contained in less than one page the compact yet amazing definition of the Lisp programming language using Lisp itself. This meta-circular account was referred as the “Maxwell’s Equations of Software” by Alan Kay. In a similar fashion, Paul Graham stated that this insight did to programming something like what Euclid did for geometry. In essence, the said definition demonstrated that it is possible to build an entire programming language using only a notation for functions and a handful of simple operators. In this talk, I will use Clojure to show how to build an interpreter that mimics Lisp in its very initial stages. As in the original documentation, the interpreter will consist of two main and highly intermixed functions: `eval` and `apply`. The central objective of this presentation is to provide attendees some highlights on the origins of Lisp and how its design ideas are central to Clojure and other programming languages. 
 
+== Bibliography
+
+- acmqueue. http://queue.acm.org/detail.cfm?id=1039523[A Conversation with Alan Kay.] 2004.
+- Graham, Paul. http://languagelog.ldc.upenn.edu/myl/llog/jmc.pdf[The Roots of Lisp.] 2002.
+- krisajenkins https://github.com/krisajenkins/original-lisp[The Original LISP Interpreter In Clojure.] 2012.
+- McCarthy, John. https://aiplaybook.a16z.com/reference-material/mccarthy-1960.pdf[Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I.] 1960.
+- McCarthy, John, et al. http://www.softwarepreservation.org/projects/LISP/book/LISP%201.5%20Programmers%20Manual.pdf[LISP 1.5 Programmer's Manual, 2nd Edition.] 1962. 
+- McCarthy, John. http://jmc.stanford.edu/articles/lisp/lisp.pdf[History of Lisp.] 1979.
+
 == Running the code
 
 *NOTE:* You need to have https://leiningen.org/[Leiningen] intalled to run the code as described below.
@@ -58,7 +67,7 @@ user=> ($eval '((LABEL MAPCAR (LAMBDA (F L)
 ----
 
 
-== Running the test
+== Running the tests
 
 Within the `lisp-one-point-five` directory, type at the terminal:
 
