@@ -81,34 +81,34 @@
   (is (= 'A
          ($apply '(LAMBDA (X) (CAR X)) '((A B C)) $NIL)))
   (is (= '((B C) (E F) (G H) (J K))
-         ($apply 'MAP
+         ($apply 'MAPCAR
                  '(CDR ((A B C) (D E F) (F G H) (I J K)))
-                 '((MAP (LAMBDA (F X)
-                          (COND
-                            ((EQ X NIL) NIL)
-                            (T          (CONS (F (CAR X))
-                                              (MAP F (CDR X)))))))
+                 '((MAPCAR (LAMBDA (F X)
+                             (COND
+                               ((EQ X NIL) NIL)
+                               (T          (CONS (F (CAR X))
+                                                 (MAPCAR F (CDR X)))))))
                    (NIL ())
                    (T   true)))))
   (is (= $NIL
-         ($apply '(LABEL DUP
+         ($apply '(LABEL DUPALL
                          (LAMBDA (X)
                            (COND
                              ((EQ X NIL) NIL)
                              (T          (CONS (CAR X)
                                                (CONS (CAR X)
-                                                     (DUP (CDR X))))))))
+                                                     (DUPALL (CDR X))))))))
                  '(())
                  '((NIL ()) (T true)))))
-  (is (= '(ALPHA ALPHA BETA BETA GAMMA GAMMA)
-         ($apply '(LABEL DUP
+  (is (= '(A A B B C C D D)
+         ($apply '(LABEL DUPALL
                          (LAMBDA (X)
                            (COND
                              ((EQ X NIL) NIL)
                              (T          (CONS (CAR X)
                                                (CONS (CAR X)
-                                                     (DUP (CDR X))))))))
-                 '((ALPHA BETA GAMMA))
+                                                     (DUPALL (CDR X))))))))
+                 '((A B C D))
                  '((NIL ()) (T true))))))
 
 (deftest test-$eval
@@ -148,11 +148,12 @@
                              ((EQ NIL LST) NIL)
                              (T (CONS (FN (CAR LST))
                                       (MAPCAR FN (CDR LST)))))))
-                  EXAMPLE
-                  (QUOTE (A B C)))
+                  DUP
+                  LST)
                 '((NIL ())
                   (T true)
-                  (EXAMPLE (LAMBDA (X) (CONS X (CONS X NIL))))))))
+                  (DUP (LAMBDA (X) (CONS X (CONS X NIL))))
+                  (LST (A B C))))))
   ; The following assertion demonstrates that Lisp 1.5 had
   ; variables with dynamic scoping.
   (is (= '((ALPHA OMEGA) BETA GAMMA)
@@ -163,3 +164,8 @@
                   (A (OMEGA))
                   (B (BETA GAMMA))
                   (X ALPHA))))))
+
+(deftest test-$evalquote
+  (is (= 'A ($evalquote 'CAR '((A B C)))))
+  (is (= '(A A) ($evalquote '(LAMBDA (X) (CONS X (CONS X (QUOTE ()))))
+                            '(A)))))
