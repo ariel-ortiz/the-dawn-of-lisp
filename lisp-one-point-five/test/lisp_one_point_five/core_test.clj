@@ -87,30 +87,30 @@
          ($apply 'MAPCAR
                  '(CDR ((A B C) (D E F) (F G H) (I J K)))
                  '((MAPCAR (LAMBDA (F X)
-                                   (COND
-                                    ((EQ X NIL) NIL)
-                                    (T          (CONS (F (CAR X))
-                                                      (MAPCAR F (CDR X)))))))
+                             (COND
+                               ((EQ X NIL) NIL)
+                               (T          (CONS (F (CAR X))
+                                                 (MAPCAR F (CDR X)))))))
                    (NIL ())
                    (T   true)))))
   (is (= $NIL
          ($apply '(LABEL DUPALL
                          (LAMBDA (X)
-                                 (COND
-                                  ((EQ X NIL) NIL)
-                                  (T          (CONS (CAR X)
-                                                    (CONS (CAR X)
-                                                          (DUPALL (CDR X))))))))
+                           (COND
+                             ((EQ X NIL) NIL)
+                             (T          (CONS (CAR X)
+                                               (CONS (CAR X)
+                                                     (DUPALL (CDR X))))))))
                  '(())
                  '((NIL ()) (T true)))))
   (is (= '(A A B B C C D D)
          ($apply '(LABEL DUPALL
                          (LAMBDA (X)
-                                 (COND
-                                  ((EQ X NIL) NIL)
-                                  (T          (CONS (CAR X)
-                                                    (CONS (CAR X)
-                                                          (DUPALL (CDR X))))))))
+                           (COND
+                             ((EQ X NIL) NIL)
+                             (T          (CONS (CAR X)
+                                               (CONS (CAR X)
+                                                     (DUPALL (CDR X))))))))
                  '((A B C D))
                  '((NIL ()) (T true))))))
 
@@ -147,10 +147,10 @@
   (is (= '((A A) (B B) (C C))
          ($eval '((LABEL MAPCAR
                          (LAMBDA (FN LST)
-                                 (COND
-                                  ((EQ NIL LST) NIL)
-                                  (T (CONS (FN (CAR LST))
-                                           (MAPCAR FN (CDR LST)))))))
+                           (COND
+                             ((EQ NIL LST) NIL)
+                             (T (CONS (FN (CAR LST))
+                                      (MAPCAR FN (CDR LST)))))))
                   DUP
                   LST)
                 '((NIL ())
@@ -161,7 +161,7 @@
   ; variables with dynamic scoping.
   (is (= '((ALPHA OMEGA) BETA GAMMA)
          ($eval '((LAMBDA (X)
-                          ((LAMBDA (Y) (F Y)) B))
+                    ((LAMBDA (Y) (F Y)) B))
                   (F A))
                 '((F (LAMBDA (Z) (CONS X Z)))
                   (A (OMEGA))
